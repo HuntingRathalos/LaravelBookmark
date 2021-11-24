@@ -7,11 +7,17 @@ use Dusterio\LinkPreview\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
-use App\Lib\LinkPreview\LinkPreview;
+use App\Lib\LinkPreview\LinkPreviewInterface;
 
 
 final class CreateBookmarkUseCase
 {
+  private LinkPreviewInterface $linkPreview;
+
+  public function __construct(LinkPreviewInterface $linkPreview)
+  {
+      $this->linkPreview = $linkPreview;
+  }
     /**
      * ブックマーク作成処理
      *
@@ -34,7 +40,7 @@ final class CreateBookmarkUseCase
         // @see https://www.linkpreview.net/
         $previewClient = new Client($url);
         try {
-          $preview = (new LinkPreview())->get($url);
+          $preview = $this->linkPreview->get($url);
 
             $model = new Bookmark();
             $model->url = $url;
