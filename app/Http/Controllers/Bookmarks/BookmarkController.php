@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use App\Bookmark\UseCase\ShowBookmarkListPageUseCase;
+use App\Http\Requests\CreateBookmarkRequest; 
+
 
 
 class BookmarkController extends Controller
@@ -128,7 +130,7 @@ class BookmarkController extends Controller
      * @param Request $request
      * @return Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function create(Request $request)
+    public function create(CreateBookmarkRequest $request)
     {
         if (Auth::guest()) {
             // @note ここの処理はユーザープロフィールでも使われている
